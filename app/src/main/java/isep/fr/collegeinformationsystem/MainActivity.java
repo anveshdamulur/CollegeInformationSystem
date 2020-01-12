@@ -1,14 +1,30 @@
 package isep.fr.collegeinformationsystem;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import android.app.Application;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.collegeinfo.database.AppSharedPreferences;
+import com.example.collegeinfo.database.DatabaseHelper;
+
+public class MainActivity extends Application {
+    public static final String TAG = "MainApplication";
+    public static MainActivity Instance;
+
+    public static MainActivity getInstance() {
+        return Instance;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate() {
+        super.onCreate();
+
+        Instance = this;
+
+        //initilize sharedprefference
+        AppSharedPreferences.getInstance().Initialize(getApplicationContext());
+
+        //initilize database
+        DatabaseHelper.init(getApplicationContext());
+
     }
 }
